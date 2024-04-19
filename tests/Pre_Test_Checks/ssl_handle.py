@@ -1,8 +1,8 @@
 import pytest
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
-from Web_Driver.conftest import chrome_driver_init
-from URLS.urls import all_urls
+from tests.Web_Driver.conftest import chrome_driver_init
+from tests.URLS.urls import all_urls
 
 @pytest.mark.usefixtures("chrome_driver_init")
 class SSLBaseTest:
