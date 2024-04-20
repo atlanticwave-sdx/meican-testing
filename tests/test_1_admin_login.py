@@ -12,12 +12,15 @@ from tests.URLS.urls import all_urls
 
 class Test_1(SSLBaseTest):
 
-    # Test -1 --> Entering wrong credentials for login and pasword fields and clicking sign in
+    # Entering wrong credentials for login and pasword fields and clicking sign in
     def test_wrong_credentials(self):
         self.handle_ssl_warning(all_urls['ADMIN_LOGIN_URL'])
+        
+        login = "wrong_credentials"
+        password = "wrong_credentials"
             
-        self.driver.find_element(By.ID, "loginform-login").send_keys("wrong_credentials")
-        self.driver.find_element(By.ID, "loginform-password").send_keys("wrong_credentials")
+        self.driver.find_element(By.ID, "loginform-login").send_keys(login)
+        self.driver.find_element(By.ID, "loginform-password").send_keys(password)
         self.driver.find_element(By.XPATH, "//button[text()='Sign in']").click()
         
         check_element = WebDriverWait(self.driver, 10).until(
