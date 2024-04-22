@@ -5,15 +5,15 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
-from Pre_Test_Checks.ssl_handle import SSLBaseTest
-from Web_Driver.conftest import chrome_driver_init
-from URLS.urls import all_urls
+import ssl_handle
+from conftest import chrome_driver_init
+import urls
 
-class Test_1(SSLBaseTest):
+class Test_1(ssl_handle.SSLBaseTest):
 
     # Entering wrong credentials for login and pasword fields and clicking sign in
     def test_wrong_credentials(self):
-        self.handle_ssl_warning(all_urls['ADMIN_LOGIN_URL'])
+        self.handle_ssl_warning(urls.all_urls['ADMIN_LOGIN_URL'])
         
         login = "wrong_credentials"
         password = "wrong_credentials"
