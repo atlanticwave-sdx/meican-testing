@@ -5,9 +5,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
-from tests.Pre_Test_Checks.ssl_handle import SSLBaseTest
-from tests.Web_Driver.conftest import chrome_driver_init
-from tests.URLS.urls import all_urls
+from Pre_Test_Checks.ssl_handle import SSLBaseTest
+from Web_Driver.conftest import chrome_driver_init
+from URLS.urls import all_urls
 
 class Test_1(SSLBaseTest):
 
