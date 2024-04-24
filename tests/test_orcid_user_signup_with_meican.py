@@ -127,7 +127,7 @@ class Test(ssl_handle.SSLBaseTest, cookies_handle.CookiesBaseTest):
             # Try to locate the first element (email sent to verify)
             check_element1 = WebDriverWait(self.driver, 5).until(
                 EC.visibility_of_element_located(
-                    (By.XPATH, "//p[contains(text(),'We sent you an email to confirm your account. plea')]"))
+                    (By.XPATH, "//p[contains(text(),'We sent you an email to confirm your account. please complete verification.')]"))
             )
         except TimeoutException:
             # If the first element is not found, try to locate the second element (verifying for the first time)
