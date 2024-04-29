@@ -10,11 +10,11 @@ The primary goal of this task is to establish a Selenium-based automation framew
 
 # Scope:
 
-**Framework Setup**: Set up a Selenium automation framework compatible with the SDX-Meican project environment.
-**Test Script Development**: Develop test scripts to cover key features and user workflows of SDX-Meican.
-**Integration with CI/CD**: Integrate the automation tests with our continuous integration and continuous deployment pipelines to ensure tests run automatically with each build.
-**Reporting and Monitoring**: Implement comprehensive reporting and monitoring mechanisms to track test results and identify issues efficiently.
-**Maintenance and Scalability**: Ensure the automation framework is easily maintainable and scalable to accommodate future changes and additions to the SDX-Meican application.
+**Framework Setup**: Set up a Selenium automation framework compatible with the SDX-Meican project environment.<br>
+**Test Script Development**: Develop test scripts to cover key features and user workflows of SDX-Meican.<br>
+**Integration with CI/CD**: Integrate the automation tests with our continuous integration and continuous deployment pipelines to ensure tests run automatically with each build.<br>
+**Reporting and Monitoring**: Implement comprehensive reporting and monitoring mechanisms to track test results and identify issues efficiently.<br>
+**Maintenance and Scalability**: Ensure the automation framework is easily maintainable and scalable to accommodate future changes and additions to the SDX-Meican application.<br>
 **Expected Deliverables**:
 
 Fully functional Selenium automation framework integrated into the SDX-Meican project.
