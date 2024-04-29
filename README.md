@@ -1,6 +1,8 @@
 # meican-testing
 
-Introduction:
+Introduction
+############
+
 We need to integrate Selenium automation testing into the SDX-Meican project to enhance its UI-level testing capabilities and ensure robustness in our software releases.
 
 Objective:
