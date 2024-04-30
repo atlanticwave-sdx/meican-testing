@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import ssl_handle
 from conftest import chrome_driver_init
 import urls
@@ -51,60 +51,41 @@ class Test(ssl_handle.SSLBaseTest):
             eye_icon.click()
             sleep(1)
 
-            empty_div = 0
+            self.driver.find_element(By.XPATH, "//a[text()='Add']").click()
+            sleep(1)
+            dropdown_element = self.driver.find_element(By.ID, "userdomainrole-_grouprolename")
+            dropdown = Select(dropdown_element)
+            dropdown.select_by_visible_text("SDX Circuit")
+            sleep(1)
+            self.driver.find_element(By.XPATH, "//button[contains(text(),'Save')]").click()
+
             try:
-                user_row = self.driver.find_element(
-                    By.XPATH,
-                    "//tbody/tr/td/div[@class='empty' and text()='No results found.']]"
-                )
-            except NoSuchElementException:
-                print("No results found not present")
-
-            # empty_div = WebDriverWait(self.driver, 10).until(
-            #     EC.visibility_of_element_located((By.XPATH, "//tbody/tr/td/div[@class='empty' and text()='No results found.']"))
-            # )
-
-            if empty_div:
-                self.driver.find_element(By.XPATH, "//a[text()='Add']").click()
-                sleep(1)
-                dropdown_element = self.driver.find_element(By.ID, "userdomainrole-_grouprolename")
-                dropdown = Select(dropdown_element)
-                dropdown.select_by_visible_text("SDX Circuit")
-                sleep(1)
-                self.driver.find_element(By.XPATH, "//button[contains(text(),'Save')]").click()
-
-                check_element2 = WebDriverWait(self.driver, 10).until(
-                    EC.visibility_of_element_located((By.XPATH, "//span[contains(text(),'Role created successfully')]"))
-                )
-                # // span[contains(text(), 'The user already has this profile')]
-                assert check_element2.is_displayed(), "Role created successfully message not displayed"
-            else:
-                table_body = self.driver.find_element(By.XPATH, "//tbody")
-                rows = table_body.find_elements(By.TAG_NAME, "tr")
-                SDX_circuit_found = 0
-
-                for row in rows:
-                    cells = row.find_elements(By.TAG_NAME, "td")
-                    if len(cells) >= 3:  # Ensure there are at least 3 cells in the row
-                        group_name = cells[2].text
-                        if group_name == "SDX Circuit":
-                            SDX_circuit_found = 1
-                            break
-                if SDX_circuit_found == 0:
-                    self.driver.find_element(By.XPATH, "//a[text()='Add']").click()
-                    sleep(1)
-                    dropdown_element = self.driver.find_element(By.ID, "userdomainrole-_grouprolename")
-                    dropdown = Select(dropdown_element)
-                    dropdown.select_by_visible_text("SDX Circuit")
-                    sleep(1)
-                    self.driver.find_element(By.XPATH, "//button[contains(text(),'Save')]").click()
-                    sleep(1)
-
-                    check_element2 = WebDriverWait(self.driver, 10).until(
-                        EC.visibility_of_element_located((By.XPATH, "//span[contains(text(),'Role created successfully')]"))
+                WebDriverWait(self.driver, 10).until(
+                    EC.any_of(
+                        EC.visibility_of_element_located(
+                            (By.XPATH, "//span[contains(text(),'Role created successfully')]")),
+                        EC.visibility_of_element_located(
+                            (By.XPATH, "//span[contains(text(),'The user already has this profile')]"))
                     )
-                    assert check_element2.is_displayed(), "Role created successfully message not displayed"
+                )
+            except TimeoutException:
+                raise AssertionError("Role create/exist message not displayed")
 
+            sleep(1)
+            self.driver.find_element(By.XPATH, "//a/span[text()='SDX Circuits']").click()
+            sleep(1)
+            self.driver.find_element(By.XPATH, "//a/span[text()='SDX Circuits']").click()
+            view_link = WebDriverWait(self.driver, 10).until(
+                EC.any_of(
+                    EC.visibility_of_element_located(
+                        (By.XPATH, "//body/div[1]/aside[1]/section[1]/ul[1]/li[3]/ul[1]/li[2]/a[1]")),
+                    EC.visibility_of_element_located(
+                        (By.XPATH, "//span[contains(text(),'Group updated successfully')]")),
+                    EC.visibility_of_element_located(
+                        (By.XPATH, "//span[contains(text(),'Update')]"))
+                )
+            )
+            assert view_link.is_displayed(), "SDX Circuit curd Options not displayed"
 
 if __name__ == "__main__":
     pytest.main()
