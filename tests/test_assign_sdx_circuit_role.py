@@ -80,9 +80,11 @@ class Test(ssl_handle.SSLBaseTest):
                     EC.visibility_of_element_located(
                         (By.XPATH, "//body/div[1]/aside[1]/section[1]/ul[1]/li[3]/ul[1]/li[2]/a[1]")),
                     EC.visibility_of_element_located(
-                        (By.XPATH, "//span[contains(text(),'Group updated successfully')]")),
+                        (By.XPATH, "//span[contains(text(),'View')]")),
                     EC.visibility_of_element_located(
-                        (By.XPATH, "//span[contains(text(),'Update')]"))
+                        (By.XPATH, "//span[contains(text(),'Update')]")),
+                    EC.visibility_of_element_located(
+                        (By.XPATH, "//span[contains(text(),'Delete')]"))
                 )
             )
             assert view_link.is_displayed(), "SDX Circuit curd Options not displayed"
