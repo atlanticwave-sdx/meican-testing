@@ -40,7 +40,7 @@ class Test(ssl_handle.SSLBaseTest):
         try:
             user_row = self.driver.find_element(
                 By.XPATH,
-                "//tbody/tr[td[contains(text(), 'Selenium Testing User')]]"
+                "//tbody/tr[td[contains(text(), 'master')]]"
             )
         except NoSuchElementException:
             print("Selenium Testing User is not created")
