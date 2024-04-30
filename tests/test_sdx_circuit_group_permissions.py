@@ -43,6 +43,7 @@ class Test(ssl_handle.SSLBaseTest):
             EC.visibility_of_element_located((By.XPATH, "//span[contains(text(),'Group updated successfully')]"))
         )
         assert check_element2.is_displayed(), "Group updated successfully message not displayed"
+
         sleep(1)
         self.driver.find_element(By.XPATH, "//a/span[text()='SDX Circuits']").click()
         sleep(1)
@@ -50,7 +51,6 @@ class Test(ssl_handle.SSLBaseTest):
         view_link = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//body/div[1]/aside[1]/section[1]/ul[1]/li[3]/ul[1]/li[2]/a[1]"))
         )
-
         assert view_link.is_displayed(), "View button is not displayed under SDX Circuits"
 
 
@@ -69,6 +69,7 @@ class Test(ssl_handle.SSLBaseTest):
             EC.visibility_of_element_located((By.XPATH, "//span[contains(text(),'Group updated successfully')]"))
         )
         assert check_element3.is_displayed(), "Group updated successfully message not displayed"
+
         sleep(1)
         self.driver.find_element(By.XPATH, "//a/span[text()='SDX Circuits']").click()
         sleep(1)
@@ -96,6 +97,7 @@ class Test(ssl_handle.SSLBaseTest):
             EC.visibility_of_element_located((By.XPATH, "//span[contains(text(),'Group updated successfully')]"))
         )
         assert check_element4.is_displayed(), "Group updated successfully message not displayed"
+
         sleep(1)
         self.driver.find_element(By.XPATH, "//a/span[text()='SDX Circuits']").click()
         sleep(1)
