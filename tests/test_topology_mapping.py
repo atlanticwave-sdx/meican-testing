@@ -87,6 +87,7 @@ class Test(ssl_handle.SSLBaseTest):
                                 ui_node_ids.append(node_id)
                                 status = "Found in API URL" if node_id in api_url_node_ids else "Not Found in API URL"
                                 print(f'Location: {location}, Node: {node_id}, Status: {status}')
+                                assert node_id in api_url_node_ids, f"Node: {node_id} not found in unique nodes."
 
                     self.driver.find_element(By.XPATH, "//button[@class='close']").click()
                     sleep(1)
