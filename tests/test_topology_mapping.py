@@ -25,7 +25,6 @@ class Test(ssl_handle.SSLBaseTest):
             if response.status_code == 200:
                 data = response.json()
 
-                # # Storing the Nodes from the API response in a dictionary with initial value as False
                 # api_url_node_ids = {node['id']: True for node in data['nodes']}
                 # print(f'\nThe nodes from the API are - \n{list(api_url_node_ids.values())} \n')
                 api_url_node_ids = [node['id'] for node in data['nodes']]
