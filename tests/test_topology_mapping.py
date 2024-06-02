@@ -103,4 +103,4 @@ class Test(ssl_handle.SSLBaseTest):
 
 
 if __name__ == "__main__":
-    pytest.main(['-s'])
+    pytest.main()
