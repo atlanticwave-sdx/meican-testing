@@ -15,7 +15,7 @@ import re
 
 class Test(ssl_handle.SSLBaseTest):
 
-    def test_api_response(self):
+    def test_topology_mapping(self):
         try:
             # API Calling
             api_url = urls.all_urls['API_URL'] + 'topology'
