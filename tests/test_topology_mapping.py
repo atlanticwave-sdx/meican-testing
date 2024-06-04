@@ -26,9 +26,9 @@ class Test(ssl_handle.SSLBaseTest):
                 data = response.json()
 
                 api_url_node_ids = [node['id'] for node in data['nodes']]
-                api_url_node_ids.append("test_id")
-                api_url_node_ids.append("test_id12")
-                api_url_node_ids.append('urn:sdx:node:ampath.net:Ampath12')
+                # api_url_node_ids.append("test_id")
+                # api_url_node_ids.append("test_id12")
+                # api_url_node_ids.append('urn:sdx:node:ampath.net:Ampath12')
                 print(f'\n \nThe nodes from the API are - \n{api_url_node_ids}\n')
 
                 node_status_dict = {node['id']: {
