@@ -25,11 +25,15 @@ class Test(ssl_handle.SSLBaseTest):
             if response.status_code == 200:
                 data = response.json()
 
-                # api_url_node_ids = {node['id']: True for node in data['nodes']}
-                # print(f'\nThe nodes from the API are - \n{list(api_url_node_ids.values())} \n')
                 api_url_node_ids = [node['id'] for node in data['nodes']]
-                print(f'\n \nThe nodes from the API are - \n{api_url_node_ids}')
-                # api_url_node_ids = []
+                api_url_node_ids.append("test_id")
+                api_url_node_ids.append("test_id12")
+                api_url_node_ids.append('urn:sdx:node:ampath.net:Ampath12')
+                print(f'\n \nThe nodes from the API are - \n{api_url_node_ids}\n')
+
+                node_status_dict = {node['id']: {
+                    "location": node.get('location', {}).get('address', 'Unknown Location'),
+                    "found": False} for node in data['nodes']}
 
                 # Selenium automation start
                 self.handle_ssl_warning(urls.all_urls['ADMIN_LOGIN_URL'])
@@ -55,17 +59,14 @@ class Test(ssl_handle.SSLBaseTest):
                 # Finding all the nodes (using img tag)
                 marker_images = main_div.find_elements(By.TAG_NAME, 'img')
 
-                # Clicking each node and comparing the nodes with API response nodes.
+                # Clicking each node and extracting the node details.
                 ui_node_ids = []
-                count = 1
                 for marker in marker_images:
                     try:
                         marker.click()
                     except ElementClickInterceptedException:
                         self.driver.execute_script("arguments[0].click();", marker)
-
                     sleep(1)
-                    print(f"\nNode - {count}")
 
                     modal_xpath = "//div[@id='myModal' and contains(@class, 'modal')]"
                     modal_element = WebDriverWait(self.driver, 10).until(
@@ -73,29 +74,43 @@ class Test(ssl_handle.SSLBaseTest):
                     )
 
                     modal_text = modal_element.text
-                    location = re.findall(r'Location: (\S+)', modal_text)
-                    print(f"Locations at this node are - {location}")
-
                     location_sections = modal_text.split("Location:")
                     for section in location_sections[1:]:
                         lines = section.split('\n')
-                        location = lines[0].strip()
                         for line in lines:
                             node_match = re.search(r'Node: (\S+)', line)
                             if node_match:
                                 node_id = node_match.group(1)
                                 ui_node_ids.append(node_id)
-                                status = "Found in API URL" if node_id in api_url_node_ids else "Not Found in API URL"
-                                print(f'Location: {location}, Node: {node_id}, Status: {status}')
-                                assert node_id in api_url_node_ids, f"Node: {node_id} not found in unique nodes."
 
                     self.driver.find_element(By.XPATH, "//button[@class='close']").click()
                     sleep(1)
-                    count += 1
 
-                # print(f'\nThe nodes from the UI are - \n{ui_node_ids}')
-                # missing_nodes = [node for node, found in api_url_node_ids.items() if not found]
-                # assert not missing_nodes, f"The following nodes were not found in the UI: {missing_nodes}"
+                # Checking if API nodes are in UI nodes
+                # not_found_nodes = []
+                dict_array = {}
+                for api_node_id in api_url_node_ids:
+                    status = "True" if api_node_id in ui_node_ids else "False"
+                    # location_address = node_status_dict.get(api_node_id, {}).get('location', 'Unknown Location')
+                    #
+                    # if api_node_id in node_status_dict:
+                    #     node_status_dict[api_node_id]["found"] = True if status == "Found in UI" else False
+                    # else:
+                    #     not_found_nodes.append(api_node_id)
+                    #
+                    # print(f'Location: {location_address}, Node: {api_node_id}, Status: {status}')
+                    dict_array[api_node_id] = status
+                print(f"The dict array is - {dict_array}")
+
+                # print("\nNodes not found in the UI:")
+                # for node_id in not_found_nodes:
+                #     print(node_id)
+
+                if "False" in dict_array.values():
+                    assert False, f"Not all nodes were found in the UI."
+
+                # all_found = all(details["found"] for details in node_status_dict.values())
+                # assert all_found, f"Not all nodes were found in the UI. Details: {node_status_dict}"
 
         except TimeoutException as e:
             print(f"TimeoutException: {str(e)}")
