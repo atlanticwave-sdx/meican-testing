@@ -18,15 +18,15 @@ class Test(ssl_handle.SSLBaseTest, cookies_handle.CookiesBaseTest):
         self.handle_ssl_warning(urls.all_urls['USER_LOGIN_URL'])
         self.handle_cookies_warning(urls.all_urls['USER_LOGIN_URL'])
 
-        self.driver.find_element(By.ID, "username").send_keys("0000-0000-0000-0000")
-        self.driver.find_element(By.ID, "password").send_keys("Password11")
+        self.driver.find_element(By.ID, "username-input").send_keys("0000-0000-0000-0000")
+        self.driver.find_element(By.ID, "password").send_keys("Password11wdfg")
         self.driver.find_element(By.ID, "signin-button").click()
 
         check_element = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(
-                (By.XPATH, "//mat-error[contains(., 'Incorrect username and/or password')]"))
+                (By.ID, "dialogTitle"))
         )
-        assert check_element.is_displayed(), "Incorrect username or password message not displayed"
+        assert check_element.is_displayed(), "Something's not quite right... message not displayed"
 
     # Entering blank credentials for login password fields and clicking sign in
     def test_user_login_all_blank_credentials(self):
@@ -37,9 +37,9 @@ class Test(ssl_handle.SSLBaseTest, cookies_handle.CookiesBaseTest):
 
         check_element = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(
-                (By.XPATH, "//mat-error[contains(., 'Email or 16-digit ORCID iD is required')]"))
+                (By.XPATH, "//mat-error[contains(., 'Please enter your email address or your ORCID iD')]"))
         )
-        assert check_element.is_displayed(), "Email or 16-digit ORCID iD is required message not displayed"
+        assert check_element.is_displayed(), "Please enter your email address or your ORCID iD message not displayed"
 
     # Entering blank login invalid password fields and clicking sign in
     def test_user_login_blank_login_invalid_password(self):
@@ -51,73 +51,73 @@ class Test(ssl_handle.SSLBaseTest, cookies_handle.CookiesBaseTest):
 
         check_element = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(
-                (By.XPATH, "//mat-error[contains(., 'Email or 16-digit ORCID iD is required')]"))
+                (By.XPATH, "//mat-error[contains(., 'Please enter your email address or your ORCID iD')]"))
         )
-        assert check_element.is_displayed(), "Email or 16-digit ORCID iD is required message not displayed"
+        assert check_element.is_displayed(), "Please enter your email address or your ORCID iD message not displayed"
 
     # Entering blank password wrong login and clicking sign in
     def test_user_login_blank_password_wrong_login(self):
         self.handle_ssl_warning(urls.all_urls['USER_LOGIN_URL'])
         self.handle_cookies_warning(urls.all_urls['USER_LOGIN_URL'])
 
-        self.driver.find_element(By.ID, "username").send_keys("0000-0000-0000-0000")
+        self.driver.find_element(By.ID, "username-input").send_keys("0000-0000-0000-0000")
         self.driver.find_element(By.ID, "signin-button").click()
 
         check_element = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(
-                (By.XPATH, "//mat-error[contains(., 'Incorrect username and/or password')]"))
+                (By.ID, "dialogTitle"))
         )
-        assert check_element.is_displayed(), "Incorrect username or password message not displayed"
+        assert check_element.is_displayed(), "Something's not quite right... message not displayed"
 
     # Entering blank login valid password fields and clicking sign in
     def test_user_login_blank_login_valid_password(self):
         self.handle_ssl_warning(urls.all_urls['USER_LOGIN_URL'])
         self.handle_cookies_warning(urls.all_urls['USER_LOGIN_URL'])
 
-        self.driver.find_element(By.ID, "password").send_keys("Password1")
+        self.driver.find_element(By.ID, "password").send_keys("qazwsxedc123@123")
         self.driver.find_element(By.ID, "signin-button").click()
 
         check_element = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(
-                (By.XPATH, "//mat-error[contains(., 'Email or 16-digit ORCID iD is required')]"))
+                (By.XPATH, "//mat-error[contains(., 'Please enter your email address or your ORCID iD')]"))
         )
-        assert check_element.is_displayed(), "Email or 16-digit ORCID iD is required message not displayed"
+        assert check_element.is_displayed(), "Please enter your email address or your ORCID iD message not displayed"
 
     # Entering blank password valid login and clicking sign in
     def test_user_login_blank_password_valid_login(self):
         self.handle_ssl_warning(urls.all_urls['USER_LOGIN_URL'])
         self.handle_cookies_warning(urls.all_urls['USER_LOGIN_URL'])
 
-        self.driver.find_element(By.ID, "username").send_keys("0009-0005-3472-1812")
+        self.driver.find_element(By.ID, "username-input").send_keys("0009-0002-3398-6622")
         self.driver.find_element(By.ID, "signin-button").click()
 
         check_element = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(
-                (By.XPATH, "//mat-error[contains(., 'Incorrect username and/or password')]"))
+                (By.ID, "dialogTitle"))
         )
-        assert check_element.is_displayed(), "Incorrect username or password message not displayed"
+        assert check_element.is_displayed(), "Something's not quite right.. message not displayed"
 
     # Entering invalid login format and clicking sign in
     def test_user_login_invalid_login_format(self):
         self.handle_ssl_warning(urls.all_urls['USER_LOGIN_URL'])
         self.handle_cookies_warning(urls.all_urls['USER_LOGIN_URL'])
 
-        self.driver.find_element(By.ID, "username").send_keys("invalid_format")
+        self.driver.find_element(By.ID, "username-input").send_keys("invalid_format")
         self.driver.find_element(By.ID, "signin-button").click()
 
         check_element = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(
-                (By.XPATH, "//mat-error[contains(., 'Use the format example@email.com or 0000-0001-2345-6789')]"))
+                (By.XPATH, "//mat-error[contains(., 'Please enter a valid email address or ORCID iD')]"))
         )
-        assert check_element.is_displayed(), "Use the format example@email.com or 0000-0001-2345-6789d"
+        assert check_element.is_displayed(), "Please enter a valid email address or ORCID iD message displayed"
 
     # Entering valid login password fields and clicking sign in
     def test_user_login_all_valid_credentials(self):
         self.handle_ssl_warning(urls.all_urls['USER_LOGIN_URL'])
         self.handle_cookies_warning(urls.all_urls['USER_LOGIN_URL'])
 
-        self.driver.find_element(By.ID, "username").send_keys("0009-0005-3472-1812")
-        self.driver.find_element(By.ID, "password").send_keys("Password1")
+        self.driver.find_element(By.ID, "username-input").send_keys("0009-0002-3398-6622")
+        self.driver.find_element(By.ID, "password").send_keys("qazwsxedc123@123")
         self.driver.find_element(By.ID, "signin-button").click()
 
         check_element1 = None
@@ -173,7 +173,7 @@ class Test(ssl_handle.SSLBaseTest, cookies_handle.CookiesBaseTest):
         alert.accept()
 
     def perform_valid_email_test(self):
-        self.driver.find_element(By.XPATH, "//input[@id='loginform-login']").send_keys("giveemail@gmail.com")
+        self.driver.find_element(By.XPATH, "//input[@id='loginform-login']").send_keys("seleniumtester72@gmail.com")
         self.driver.find_element(By.XPATH, "//button[contains(text(),'Submit')]").click()
 
         sleep(1)
