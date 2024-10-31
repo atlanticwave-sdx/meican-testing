@@ -116,8 +116,8 @@ class Test(ssl_handle.SSLBaseTest, cookies_handle.CookiesBaseTest):
         self.handle_ssl_warning(urls.all_urls['USER_LOGIN_URL'])
         self.handle_cookies_warning(urls.all_urls['USER_LOGIN_URL'])
 
-        self.driver.find_element(By.ID, "username-input").send_keys("0009-0002-3398-6622")
-        self.driver.find_element(By.ID, "password").send_keys("qazwsxedc123@123")
+        self.driver.find_element(By.ID, "username-input").send_keys(urls.all_urls['ORCID_VALID_USERNAME'])
+        self.driver.find_element(By.ID, "password").send_keys(urls.all_urls['ORCID_VALID_USERNAME_PASSWORD'])
         self.driver.find_element(By.ID, "signin-button").click()
 
         check_element1 = None
@@ -173,7 +173,7 @@ class Test(ssl_handle.SSLBaseTest, cookies_handle.CookiesBaseTest):
         alert.accept()
 
     def perform_valid_email_test(self):
-        self.driver.find_element(By.XPATH, "//input[@id='loginform-login']").send_keys("seleniumtester72@gmail.com")
+        self.driver.find_element(By.XPATH, "//input[@id='loginform-login']").send_keys(urls.all_urls['ORCID_USER_EMAIL'])
         self.driver.find_element(By.XPATH, "//button[contains(text(),'Submit')]").click()
 
         sleep(1)
