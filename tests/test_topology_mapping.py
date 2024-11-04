@@ -74,43 +74,27 @@ class Test(ssl_handle.SSLBaseTest):
                     )
 
                     modal_text = modal_element.text
-                    location_sections = modal_text.split("Location:")
-                    for section in location_sections[1:]:
-                        lines = section.split('\n')
-                        for line in lines:
-                            node_match = re.search(r'Node: (\S+)', line)
-                            if node_match:
-                                node_id = node_match.group(1)
-                                ui_node_ids.append(node_id)
+                    modal_text = modal_text.splitlines()
+                    del modal_text[:3]
+                    for word in modal_text:
+                        modal_text_line = word.split(' ')
+                        ui_node_ids.append(modal_text_line[3])
 
                     self.driver.find_element(By.XPATH, "//button[@class='close']").click()
                     sleep(1)
 
                 # Checking if API nodes are in UI nodes
-                # not_found_nodes = []
                 dict_array = {}
+                print(f'\n \nThe nodes from the UI are - \n{ui_node_ids}\n')
+
                 for api_node_id in api_url_node_ids:
                     status = "True" if api_node_id in ui_node_ids else "False"
-                    # location_address = node_status_dict.get(api_node_id, {}).get('location', 'Unknown Location')
-                    #
-                    # if api_node_id in node_status_dict:
-                    #     node_status_dict[api_node_id]["found"] = True if status == "Found in UI" else False
-                    # else:
-                    #     not_found_nodes.append(api_node_id)
-                    #
-                    # print(f'Location: {location_address}, Node: {api_node_id}, Status: {status}')
                     dict_array[api_node_id] = status
                 print(f"The dict array is - {dict_array}")
-
-                # print("\nNodes not found in the UI:")
-                # for node_id in not_found_nodes:
-                #     print(node_id)
 
                 if "False" in dict_array.values():
                     assert False, f"Not all nodes were found in the UI."
 
-                # all_found = all(details["found"] for details in node_status_dict.values())
-                # assert all_found, f"Not all nodes were found in the UI. Details: {node_status_dict}"
 
         except TimeoutException as e:
             print(f"TimeoutException: {str(e)}")
