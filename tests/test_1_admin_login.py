@@ -12,8 +12,20 @@ import urls
 class Test_1(ssl_handle.SSLBaseTest):
 
     # Entering wrong credentials for login and pasword fields and clicking sign in
-    def test_wrong_credentials(self):
-        self.handle_ssl_warning(urls.all_urls['ADMIN_LOGIN_URL'])
+    def test_wrong_credentials(self, chrome_driver_init):
+        # Use the fixture directly
+        self.driver = chrome_driver_init
+
+        # Handle SSL warning like the original ssl_handle does
+        self.driver.get(urls.all_urls['ADMIN_LOGIN_URL'])
+
+        # Continue with SSL warning handling if needed
+        try:
+            # Check for SSL warning and handle it
+            proceed_button = self.driver.find_element(By.ID, "proceed-button")
+            proceed_button.click()
+        except:
+            pass  # No SSL warning, continue
         
         login = "wrong_credentials"
         password = "wrong_credentials"
