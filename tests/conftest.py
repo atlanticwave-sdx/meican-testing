@@ -6,7 +6,7 @@ from selenium import webdriver
 def chrome_driver_init(request):
 
     # Set to True for headless mode, False for normal mode
-    headless_mode = True
+    headless_mode = False
 
     options = webdriver.ChromeOptions()
     if headless_mode:
